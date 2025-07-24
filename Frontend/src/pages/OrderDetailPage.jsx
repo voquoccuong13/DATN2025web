@@ -14,6 +14,8 @@ const OrderDetailPage = () => {
     const [error, setError] = useState('');
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const backendBaseURL = 'http://localhost:9000';
+
     const fetchOrder = async () => {
         try {
             setLoading(true);
@@ -286,7 +288,19 @@ const OrderDetailPage = () => {
                                     className="flex items-center justify-between bg-white p-3 rounded-lg shadow border text-sm"
                                 >
                                     <div className="flex items-center gap-3">
-                                        <img src={item.image} alt={item.name} className="w-10 h-10 rounded border" />
+                                        <img
+                                            src={
+                                                item.image.startsWith('http')
+                                                    ? item.image.replace(
+                                                          'https://eatgofood-web-production.up.railway.app',
+                                                          'http://localhost:9000',
+                                                      )
+                                                    : `http://localhost:9000${item.image}`
+                                            }
+                                            alt={item.name}
+                                            className="w-10 h-10 rounded border"
+                                        />
+
                                         <span>
                                             {item.quantity} x {item.name}
                                         </span>

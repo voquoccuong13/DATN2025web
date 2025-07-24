@@ -99,7 +99,7 @@ const Cart = () => {
         try {
             console.log('🎫 Gửi mã:', coupon);
             const res = await axios.post(
-                'http://localhost:9000/api/promotion-discounts/validate',
+                '/api/promotion-discounts/validate',
                 { code: coupon.trim() },
                 {
                     headers: {

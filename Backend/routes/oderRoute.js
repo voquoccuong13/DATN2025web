@@ -10,9 +10,6 @@ const { protect, isAdmin } = require('../middleware/authMiddleware');
 const orderConfirmationMessage = (order) => {
     const orderDetailUrl = `${process.env.FRONTEND_URL}/order/${order.orderCode}`;
 
-    // Thay thế bằng URL frontend của bạn
-    // const logoUrl = "http://localhost:9000/uploads/assets/favicon.png"; // Thay logo của bạn
-
     return `
   <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
     <div style="text-align: center;">

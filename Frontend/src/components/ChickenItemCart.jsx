@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { StoreContext } from '../context/StoreContext';
 import OptionModal from './Models/OptionModal';
+import { useNavigate } from 'react-router-dom';
+import { LoginContext } from './LoginContext';
 const ChickenItemCart = ({
     _id,
     name,
@@ -14,9 +16,12 @@ const ChickenItemCart = ({
     rating = 0,
     numReviews = 0,
 }) => {
-    const { addToCart } = useContext(StoreContext);
+    const { addToCart, token } = useContext(StoreContext);
     const [isPressed, setIsPressed] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
+    const isAuthenticated = !!token;
+    const { showLogin, setShowLogin } = useContext(LoginContext);
     const product = {
         _id,
         name,
@@ -44,6 +49,19 @@ const ChickenItemCart = ({
             </div>
         );
     };
+    const handleAddToCart = () => {
+        if (!isAuthenticated) {
+            setShowLogin(true); // ✅ Mở modal login thay vì chuyển trang
+            return;
+        }
+
+        if (options && options.length > 0) {
+            setShowModal(true);
+        } else {
+            addToCart(product);
+        }
+    };
+
     return (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-200 h-full flex flex-col">
             <div onClick={() => onOpenDetail(_id)} className="h-48 overflow-hidden cursor-pointer">
@@ -67,10 +85,7 @@ const ChickenItemCart = ({
                         onMouseDown={() => setIsPressed(true)}
                         onMouseUp={() => setIsPressed(false)}
                         onMouseLeave={() => setIsPressed(false)}
-                        onClick={() => {
-                            console.log('Thêm sản phẩm:', product._id);
-                            addToCart(product);
-                        }}
+                        onClick={handleAddToCart}
                         className={`add-to-cart w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full !rounded-button ${
                             isPressed ? 'pressed' : ''
                         }`}

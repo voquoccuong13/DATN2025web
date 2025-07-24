@@ -33,7 +33,7 @@ const PasswordManagement = () => {
             }
 
             const res = await axios.post(
-                'http://localhost:9000/api/users/change-password',
+                '/api/users/change-password',
                 {
                     currentPassword: form.currentPassword,
                     newPassword: form.newPassword,
@@ -58,7 +58,7 @@ const PasswordManagement = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await axios.post('http://localhost:9000/api/users/forgot-password', {
+            const res = await axios.post('/api/users/forgot-password', {
                 email,
             });
             alert('Email đặt lại mật khẩu đã được gửi.');

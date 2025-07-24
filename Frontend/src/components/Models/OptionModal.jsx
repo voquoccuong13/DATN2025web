@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { X } from 'lucide-react'; // icon close hiện đại
 
 const OptionModal = ({ product, onClose, onConfirm }) => {
     const [selectedOptions, setSelectedOptions] = useState({});
@@ -21,41 +22,61 @@ const OptionModal = ({ product, onClose, onConfirm }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white rounded-lg p-6 w-[90%] max-w-md max-h-[90vh] overflow-auto shadow-xl">
-                <h2 className="text-xl font-bold mb-4">Chọn tuỳ chọn cho {product.name}</h2>
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex justify-center items-center p-4">
+            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
+                {/* Nút đóng */}
+                <button onClick={onClose} className="absolute top-3 right-3 text-gray-500 hover:text-red-500">
+                    <X size={20} />
+                </button>
 
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    Tuỳ chọn cho <span className="text-primary">{product.name}</span>
+                </h2>
+
+                {/* Danh sách tuỳ chọn */}
                 {product.options?.map((opt, idx) => (
-                    <div key={idx} className="mb-4">
-                        <p className="font-semibold mb-2">{opt.name}</p>
-
-                        {opt.type === 'single'
-                            ? opt.choices.map((choice, i) => (
-                                  <label key={i} className="block">
-                                      <input
-                                          type="radio"
-                                          name={opt.name}
-                                          onChange={() => handleSingle(opt.name, choice)}
-                                          className="mr-2"
-                                      />
-                                      {choice.label} (+{choice.price.toLocaleString()}₫)
-                                  </label>
-                              ))
-                            : opt.choices.map((choice, i) => (
-                                  <label key={i} className="block">
-                                      <input
-                                          type="checkbox"
-                                          onChange={(e) => handleMultiple(opt.name, choice, e.target.checked)}
-                                          className="mr-2"
-                                      />
-                                      {choice.label} (+{choice.price.toLocaleString()}₫)
-                                  </label>
-                              ))}
+                    <div key={idx} className="mb-5">
+                        <p className="font-semibold mb-3 text-gray-700">{opt.name}</p>
+                        <div className="space-y-2">
+                            {opt.type === 'single'
+                                ? opt.choices.map((choice, i) => (
+                                      <label key={i} className="flex items-center gap-3">
+                                          <input
+                                              type="radio"
+                                              name={opt.name}
+                                              onChange={() => handleSingle(opt.name, choice)}
+                                              className="accent-primary"
+                                          />
+                                          <span>
+                                              {choice.label}{' '}
+                                              <span className="text-sm text-gray-500">
+                                                  (+{choice.price.toLocaleString()}₫)
+                                              </span>
+                                          </span>
+                                      </label>
+                                  ))
+                                : opt.choices.map((choice, i) => (
+                                      <label key={i} className="flex items-center gap-3">
+                                          <input
+                                              type="checkbox"
+                                              onChange={(e) => handleMultiple(opt.name, choice, e.target.checked)}
+                                              className="accent-primary"
+                                          />
+                                          <span>
+                                              {choice.label}{' '}
+                                              <span className="text-sm text-gray-500">
+                                                  (+{choice.price.toLocaleString()}₫)
+                                              </span>
+                                          </span>
+                                      </label>
+                                  ))}
+                        </div>
                     </div>
                 ))}
 
-                <div className="flex justify-end gap-3 pt-4">
-                    <button onClick={onClose} className="text-gray-600 hover:underline">
+                {/* Nút hành động */}
+                <div className="flex justify-end gap-3 pt-6">
+                    <button onClick={onClose} className="text-gray-600 hover:underline hover:text-gray-900 transition">
                         Huỷ
                     </button>
                     <button
@@ -70,7 +91,7 @@ const OptionModal = ({ product, onClose, onConfirm }) => {
                             };
                             onConfirm(finalProduct);
                         }}
-                        className="bg-primary text-white px-4 py-2 rounded"
+                        className="bg-gradient-to-r from-pink-500 to-red-500 hover:opacity-90 text-white px-5 py-2 rounded-full font-medium shadow-lg transition"
                     >
                         Xác nhận
                     </button>

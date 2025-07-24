@@ -11,7 +11,7 @@ const FoodDisplay = () => {
         const fetchData = async () => {
             try {
                 const res = await axios.get('/api/products/top-selling');
-                setTopFood(res.data.data); // Dữ liệu từ route mới
+                setTopFood(res?.data?.data || []); // Dữ liệu từ route mới
             } catch (err) {
                 console.error('Lỗi khi lấy danh sách món ăn:', err);
             }
@@ -20,7 +20,7 @@ const FoodDisplay = () => {
         fetchData();
     }, []);
 
-    const displayedFood = showAll ? topFood : topFood.slice(0, 4);
+    const displayedFood = showAll ? topFood : topFood?.slice?.(0, 4) || [];
 
     return (
         <section id="foodhot" className="py-12 bg-white px-20 pt-24">

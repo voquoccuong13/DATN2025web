@@ -35,7 +35,7 @@ const LoginPop = ({ showLogin, setShowLogin, onLoginSuccess }) => {
     };
     const loginUser = async ({ email, password }) => {
         try {
-            const res = await axios.post('http://localhost:9000/api/users/login', {
+            const res = await axios.post(`/api/users/login`, {
                 email,
                 password,
             });
@@ -47,7 +47,7 @@ const LoginPop = ({ showLogin, setShowLogin, onLoginSuccess }) => {
 
     const registerUser = async ({ name, email, password, phone }) => {
         try {
-            const res = await axios.post('http://localhost:9000/api/users/register', {
+            const res = await axios.post(`/api/users/register`, {
                 name,
                 email,
                 password,
@@ -61,7 +61,7 @@ const LoginPop = ({ showLogin, setShowLogin, onLoginSuccess }) => {
 
     const forgotPassword = async (email) => {
         try {
-            const res = await axios.post('http://localhost:9000/api/users/forgot-password', { email });
+            const res = await axios.post(`/api/users/forgot-password`, { email });
             return res.data;
         } catch (err) {
             throw new Error(err.response?.data?.message || 'Không thể gửi yêu cầu đặt lại mật khẩu');
@@ -91,6 +91,12 @@ const LoginPop = ({ showLogin, setShowLogin, onLoginSuccess }) => {
 
                 onLoginSuccess(data.user, data.token);
                 setShowLogin(false);
+                const redirect = new URLSearchParams(window.location.search).get('redirect');
+                if (redirect) {
+                    window.location.href = redirect;
+                } else {
+                    window.location.reload();
+                }
             } else if (mode === 'register') {
                 const { username, email, password, confirmPassword, phone } = form;
                 const newErrors = {};

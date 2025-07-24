@@ -6,6 +6,7 @@ const path = require('path');
 const Order = require('../models/order');
 const router = express.Router();
 const { adminProtect, isAdmin } = require('../middleware/authMiddleware');
+const BASE_URL = process.env.BASE_URL || 'http://localhost:9000';
 
 // Cấu hình multer để lưu ảnh vào thư mục uploads và đặt tên file duy nhất
 const storage = multer.diskStorage({
@@ -38,7 +39,8 @@ router.post('/', adminProtect, isAdmin, upload.single('image'), async (req, res)
     try {
         const { name, description, category, mainCategory, price, priceOld, deal, options } = req.body;
 
-        const imageUrl = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : '';
+        const imageUrl = req.file ? `${BASE_URL}/uploads/${req.file.filename}` : '';
+
         let parsedOptions = [];
         if (options) {
             try {

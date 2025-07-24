@@ -14,15 +14,16 @@ const MenuBurger = () => {
     const [burgerList, setBurgerList] = useState([]);
     const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
     const backendBaseURL = 'http://localhost:9000';
+
     const getImageURL = (img) => (img.startsWith('http') ? img : backendBaseURL + img);
 
     // Hàm fetch data riêng biệt để tái sử dụng
     const fetchBurgerList = async () => {
         try {
             // Sử dụng absolute URL để đảm bảo nhất quán
-            const response = await axios.get(`${backendBaseURL}/api/products?mainCategory=Burger`);
+            const response = await axios.get(`/api/products?mainCategory=Burger`);
             console.log('Sản phẩm Burger:', response.data);
-            setBurgerList(response.data);
+            setBurgerList(response.data || []);
         } catch (error) {
             console.error('Lỗi khi lấy danh sách burger:', error);
         }

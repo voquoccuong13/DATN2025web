@@ -1,5 +1,5 @@
 import React from 'react';
-// import delivery from '../assets/delivery.avif';
+import delivery from '../assets/delivery.avif';
 
 const Derlivery = () => {
     return (
@@ -11,7 +11,7 @@ const Derlivery = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                         <div
                             className="rounded-lg overflow-hidden h-60 sm:h-80 md:h-[400px] bg-cover bg-center"
-                            // style={{ backgroundImage: `url(${delivery})` }}
+                            style={{ backgroundImage: `url(${delivery})` }}
                             data-aos="fade-right"
                             data-aos-duration="1000"
                         ></div>

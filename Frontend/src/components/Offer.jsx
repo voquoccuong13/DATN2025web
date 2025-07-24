@@ -17,7 +17,7 @@ const Offer = () => {
         const fetchComboDeals = async () => {
             try {
                 const res = await axios.get('/api/products?mainCategory=Combo');
-                setComboItems(res.data);
+                setComboItems(res.data || []);
             } catch (error) {
                 console.error('Lỗi khi lấy ưu đãi combo:', error);
             }
@@ -40,7 +40,9 @@ const Offer = () => {
     return (
         <section id="khuyenmai" className="py-10 md:py-20 px-4 sm:px-6 md:px-20 bg-white relative">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">Ưu đãi đặc biệt</h2>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">
+                    💥Ưu đãi đặc biệt
+                </h2>
 
                 {/* Gradient 2 bên */}
                 <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />

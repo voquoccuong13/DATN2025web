@@ -23,6 +23,7 @@ router.post('/cart', protect, async (req, res) => {
                 productId: item.productId,
                 quantity: item.quantity || 1,
                 variantKey: item.variantKey || '',
+                selectedOptions: item.selectedOptions || {},
                 price: product.price,
                 name: product.name,
                 image: product.image,

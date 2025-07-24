@@ -4,7 +4,7 @@ const { askQuestion } = require('../utils/chatBot');
 
 router.post('/ask', async (req, res) => {
     const { question } = req.body;
-    console.log('👉 Câu hỏi nhận từ frontend:', question);
+    console.log(' Câu hỏi nhận từ frontend:', question);
 
     const { reply, mainProduct, suggestProduct } = await askQuestion(question);
 

@@ -6,6 +6,10 @@ const cartItemSchema = new mongoose.Schema({
         ref: 'Product',
         required: true,
     },
+    selectedOptions: {
+        type: Object,
+        default: {},
+    },
     name: { type: String, required: true }, // ✅ thêm
     image: { type: String, required: true },
     quantity: { type: Number, default: 1 },

@@ -26,6 +26,7 @@ function ChatBox() {
 
         try {
             const res = await axios.post('/api/chatbot/ask', { question });
+
             const data = res.data;
 
             setAnswer(typeof data.reply === 'string' ? data.reply : '');

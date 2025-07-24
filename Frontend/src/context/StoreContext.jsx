@@ -12,7 +12,16 @@ const StoreContextProvider = (props) => {
     const [orderInfo, setOrderInfo] = useState(null); // Lưu thông tin đặt hàng
     const prevCartRef = useRef(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
+    const [showLogin, setShowLogin] = useState(false);
+    const [user, setUser] = useState(null);
 
+    const handleLoginSuccess = (userData, token) => {
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('token', token);
+        setToken(token); // cập nhật lại token context
+        setShowLogin(false);
+    };
     useEffect(() => {
         const updateToken = () => {
             const newToken = localStorage.getItem('token');
@@ -30,6 +39,7 @@ const StoreContextProvider = (props) => {
         setCartItem({});
         localStorage.removeItem('token'); // Xóa token khỏi localStorage
         localStorage.removeItem('cart'); // Xóa cart trong localStorage
+        setToken(null);
     };
 
     // Load giỏ hàng từ backend (MongoDB) khi có token
@@ -61,6 +71,7 @@ const StoreContextProvider = (props) => {
                     image: product.image,
                     quantity: item.quantity,
                     variantKey: item.variantKey || '',
+                    selectedOptions: item.selectedOptions || {},
                 };
             });
 
@@ -83,6 +94,7 @@ const StoreContextProvider = (props) => {
                 productId: item._id,
                 quantity: item.quantity,
                 variantKey: item.variantKey || '',
+                selectedOptions: item.selectedOptions || {},
             }));
             console.log('Saving cart items to backend:', items);
 
@@ -104,9 +116,20 @@ const StoreContextProvider = (props) => {
     // Load giỏ hàng khi mount component hoặc khi token thay đổi (ví dụ đăng nhập/xuất)
     useEffect(() => {
         if (!token) {
-            setCartItem({});
-            localStorage.removeItem('cart');
-            prevCartRef.current = {};
+            const localCart = localStorage.getItem('cart');
+            if (localCart) {
+                try {
+                    const parsed = JSON.parse(localCart);
+                    setCartItem(parsed);
+                    prevCartRef.current = parsed;
+                    console.log('✅ Giỏ hàng được load từ localStorage');
+                } catch (err) {
+                    console.error('❌ Lỗi parse giỏ hàng từ localStorage:', err);
+                    setCartItem({});
+                }
+            } else {
+                setCartItem({});
+            }
         } else {
             loadCartFromMongoDB(token);
         }
@@ -227,6 +250,11 @@ const StoreContextProvider = (props) => {
                 note,
                 setNote,
                 addMultipleToCart,
+                token,
+                showLogin,
+                setShowLogin,
+                handleLoginSuccess,
+                openLogin: () => setShowLogin(true),
             }}
         >
             {props.children}

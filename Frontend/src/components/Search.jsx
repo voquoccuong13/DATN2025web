@@ -71,12 +71,10 @@ const Search = () => {
     }, [searchTerm]);
 
     const handleClick = (menuName) => {
-        // Implement your menu navigation logic here
         console.log('Menu clicked:', menuName);
     };
 
     return (
-        // Thêm container wrapper với padding/margin ngang
         <div className="w-full px-6 sm:px-6 lg:px-8 xl:px-12 -mt-14">
             <div className="w-full py-6 border-b border-gray-200 bg-gradient-to-r from-red-50 via-white to-yellow-50 shadow rounded-xl">
                 <div className="px-6 sm:px-6 lg:px-8">
@@ -103,10 +101,9 @@ const Search = () => {
                                 key={index}
                                 className="flex flex-col items-center cursor-pointer hover:text-red-600 transition group"
                                 onClick={() => {
-                                    if (item.type === 'search') setShowSearchInput((prev) => !prev);
-                                    else if (item.type === 'scroll') {
-                                        document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
-                                    } else if (item.type === 'menu') {
+                                    if (item.type === 'search') {
+                                        setShowSearchInput((prev) => !prev);
+                                    } else {
                                         handleClick(item.label);
                                     }
                                 }}
@@ -117,27 +114,56 @@ const Search = () => {
                                 <span className="text-xs mt-1 text-center font-medium group-hover:font-semibold">
                                     {item.label}
                                 </span>
-
-                                {item.type === 'search' && (
-                                    <div
-                                        className={`mt-2 w-full col-span-full transition-all duration-500 ${
-                                            showSearchInput
-                                                ? 'opacity-100 max-h-20'
-                                                : 'opacity-0 max-h-0 overflow-hidden'
-                                        }`}
-                                    >
-                                        <input
-                                            type="text"
-                                            placeholder="Nhập món bạn cần tìm..."
-                                            className="w-full p-2 mt-2 border rounded bg-white shadow text-sm focus:outline-red-500"
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                        />
-                                    </div>
-                                )}
                             </div>
                         ))}
                     </div>
+
+                    {/* Input tìm kiếm xuất hiện riêng bên dưới */}
+                    {showSearchInput && (
+                        <div className="mt-6 w-full flex flex-col items-center">
+                            {/* Ô tìm kiếm */}
+                            <div className="w-full max-w-[600px] px-4">
+                                <input
+                                    type="text"
+                                    placeholder="Nhập món bạn cần tìm..."
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow bg-white text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                            </div>
+
+                            {/* Kết quả tìm kiếm */}
+                            <div className="w-full mt-4 px-4">
+                                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    {isLoading && (
+                                        <div className="col-span-full text-center text-gray-500 text-sm">
+                                            Đang tìm kiếm...
+                                        </div>
+                                    )}
+                                    {!isLoading && searchResults.length === 0 && searchTerm.trim() !== '' && (
+                                        <div className="col-span-full text-center text-red-500 text-sm">
+                                            Không tìm thấy món phù hợp.
+                                        </div>
+                                    )}
+                                    {!isLoading &&
+                                        searchResults
+                                            .slice(0, 6)
+                                            .map((item) => (
+                                                <FoodItem
+                                                    key={item._id}
+                                                    id={item._id}
+                                                    name={item.name}
+                                                    description={item.description}
+                                                    price={item.price}
+                                                    image={item.image}
+                                                    isNew={item.isNew}
+                                                    isHot={item.isHot}
+                                                />
+                                            ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

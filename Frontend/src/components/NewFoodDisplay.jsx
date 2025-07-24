@@ -10,7 +10,7 @@ const NewFoodDisplay = () => {
         const fetchNewFoods = async () => {
             try {
                 const res = await axios.get('/api/products/new');
-                setNewFoods(res.data.products);
+                setNewFoods(res?.data?.products || []);
             } catch (err) {
                 console.error('Lỗi khi lấy sản phẩm mới:', err);
             }
@@ -18,7 +18,7 @@ const NewFoodDisplay = () => {
         fetchNewFoods();
     }, []);
 
-    const displayedFood = showAll ? newFoods : newFoods.slice(0, 4);
+    const displayedFood = showAll ? newFoods || [] : newFoods?.slice?.(0, 4) || [];
 
     return (
         <section id="new-food" className="py-12 bg-gray-50 px-20">

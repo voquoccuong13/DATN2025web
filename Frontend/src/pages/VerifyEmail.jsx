@@ -17,7 +17,7 @@ const VerifyEmail = () => {
 
         const verify = async () => {
             try {
-                const res = await axios.get(`http://localhost:9000/api/users/verify-email?token=${token}`);
+                const res = await axios.get(`/api/users/verify-email?token=${token}`);
                 toast.success(res.data.message || 'Xác minh thành công');
                 setStatus('success');
 

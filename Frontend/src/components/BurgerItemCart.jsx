@@ -17,6 +17,7 @@ const BurgerItemCart = ({
     const { addToCart } = useContext(StoreContext);
     const [isPressed, setIsPressed] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    // const [showLogin, setShowLogin] = useState(false);
     const product = {
         _id,
         name,
