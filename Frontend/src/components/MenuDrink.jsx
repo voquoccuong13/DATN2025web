@@ -14,7 +14,7 @@ const MenuDrink = () => {
     const [sortType, setSortType] = useState('popular');
     const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
     const [drinkList, setDrinkList] = useState([]);
-    const backendBaseURL = 'http://localhost:9000';
+    const backendBaseURL = 'http://backend:9000';
     // Lọc theo loại
     const filteredList = drinkList.filter((item) => {
         if (selectedType === 'Tất cả') return true;

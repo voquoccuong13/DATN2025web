@@ -1,15 +1,9 @@
-// import { defineConfig } from "vite";
-// import react from "@vitejs/plugin-react";
-
-// // https://vite.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// });
-// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// Thay "DATN2025web" bằng đúng tên repo GitHub của bạn
 export default defineConfig({
+    base: '/DATN2025web/', // 👈 Dòng quan trọng giúp GitHub Pages hoạt động
     plugins: [react()],
     server: {
         proxy: {

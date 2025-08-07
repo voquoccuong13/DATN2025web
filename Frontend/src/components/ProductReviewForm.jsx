@@ -13,7 +13,7 @@ const ProductReviewForm = ({ product, orderCode, onSubmitted }) => {
     const [selectedProductId, setSelectedProductId] = useState('');
 
     // Thêm base URL giống như ProductDetail
-    const backendBaseURL = 'http://localhost:9000';
+    const backendBaseURL = 'http://backend:9000';
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);

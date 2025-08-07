@@ -137,46 +137,46 @@ router.get('/search', async (req, res) => {
     }
 });
 // route để lấy top sản phẩm bán chạy
-router.get('/top-selling', async (req, res) => {
-    try {
-        const topProducts = await Order.aggregate([
-            { $match: { status: 'Đã giao' } },
-            { $unwind: '$cartItems' },
-            {
-                $group: {
-                    _id: '$cartItems.productId',
-                    totalQuantity: { $sum: '$cartItems.quantity' },
+    router.get('/top-selling', async (req, res) => {
+        try {
+            const topProducts = await Order.aggregate([
+                { $match: { status: 'Đã giao' } },
+                { $unwind: '$cartItems' },
+                {
+                    $group: {
+                        _id: '$cartItems.productId',
+                        totalQuantity: { $sum: '$cartItems.quantity' },
+                    },
                 },
-            },
-            {
-                $lookup: {
-                    from: 'products', // Tên collection đúng trong MongoDB
-                    localField: '_id',
-                    foreignField: '_id',
-                    as: 'productInfo',
+                {
+                    $lookup: {
+                        from: 'products', // Tên collection đúng trong MongoDB
+                        localField: '_id',
+                        foreignField: '_id',
+                        as: 'productInfo',
+                    },
                 },
-            },
-            { $unwind: '$productInfo' },
-            {
-                $project: {
-                    _id: '$productInfo._id',
-                    name: '$productInfo.name',
-                    image: '$productInfo.image',
-                    description: '$productInfo.description',
-                    price: '$productInfo.price',
-                    totalQuantity: 1,
+                { $unwind: '$productInfo' },
+                {
+                    $project: {
+                        _id: '$productInfo._id',
+                        name: '$productInfo.name',
+                        image: '$productInfo.image',
+                        description: '$productInfo.description',
+                        price: '$productInfo.price',
+                        totalQuantity: 1,
+                    },
                 },
-            },
-            { $sort: { totalQuantity: -1 } },
-            { $limit: 4 },
-        ]);
+                { $sort: { totalQuantity: -1 } },
+                { $limit: 4 },
+            ]);
 
-        res.json({ success: true, data: topProducts });
-    } catch (err) {
-        console.error('❌ Lỗi khi lấy top sản phẩm:', err);
-        res.status(500).json({ success: false, message: 'Lỗi server khi thống kê món bán chạy' });
-    }
-});
+            res.json({ success: true, data: topProducts });
+        } catch (err) {
+            console.error('❌ Lỗi khi lấy top sản phẩm:', err);
+            res.status(500).json({ success: false, message: 'Lỗi server khi thống kê món bán chạy' });
+        }
+    });
 // [GET] /api/products/new
 // Lấy 8 sản phẩm mới nhất
 router.get('/new', async (req, res) => {

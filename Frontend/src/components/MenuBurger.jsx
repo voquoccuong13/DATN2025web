@@ -13,7 +13,7 @@ const MenuBurger = () => {
     const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
     const [burgerList, setBurgerList] = useState([]);
     const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
-    const backendBaseURL = 'http://localhost:9000';
+    const backendBaseURL = 'http://backend:9000';
 
     const getImageURL = (img) => (img.startsWith('http') ? img : backendBaseURL + img);
 

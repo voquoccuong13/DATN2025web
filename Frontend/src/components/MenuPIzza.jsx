@@ -12,7 +12,7 @@ const MenuPIzza = () => {
     const [selectedType, setSelectedType] = useState('Tất cả');
     const [sortType, setSortType] = useState('popular');
     const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
-    const backendBaseURL = 'http://localhost:9000';
+    const backendBaseURL = 'http://backend:9000';
     const [pizzaList, setPizzaList] = useState([]);
     const types = ['Tất cả', 'Hải sản', 'Thịt', 'Chay', 'Gà', 'Khác'];
     const sortOptions = [

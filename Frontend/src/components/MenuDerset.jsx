@@ -13,7 +13,7 @@ const MenuDerset = () => {
     const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
     const [dersetList, setDersetList] = useState([]);
     const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
-    const backendBaseURL = 'http://localhost:9000';
+    const backendBaseURL = 'http://backend:9000';
     // Lọc theo loại
     const filteredList = dersetList.filter((item) => {
         if (selectedType === 'Tất cả') return true;

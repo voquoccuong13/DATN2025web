@@ -14,7 +14,7 @@ const OrderDetailPage = () => {
     const [error, setError] = useState('');
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
-    const backendBaseURL = 'http://localhost:9000';
+    const backendBaseURL = 'http://backend:9000';
 
     const fetchOrder = async () => {
         try {
@@ -293,9 +293,9 @@ const OrderDetailPage = () => {
                                                 item.image.startsWith('http')
                                                     ? item.image.replace(
                                                           'https://eatgofood-web-production.up.railway.app',
-                                                          'http://localhost:9000',
+                                                          'http://backend:9000',
                                                       )
-                                                    : `http://localhost:9000${item.image}`
+                                                    : `http://backend:9000${item.image}`
                                             }
                                             alt={item.name}
                                             className="w-10 h-10 rounded border"

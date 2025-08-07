@@ -23,7 +23,7 @@ const ProductDetail = ({ onClose, productId, onRatingSubmitted, setShowLogin }) 
     const userId = localStorage.getItem('userId');
     const [filterRating, setFilterRating] = useState(0); // 0 nghĩa là "Tất cả"
     const [selectedOptions, setSelectedOptions] = useState({});
-    const backendBaseURL = 'http://localhost:9000';
+    const backendBaseURL = 'http://backend:9000';
     const handleAddToCart = () => {
         // Tạo bản sao sản phẩm có chứa selectedOptions
         const productWithOptions = {
